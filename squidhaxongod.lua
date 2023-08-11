@@ -1,22 +1,15 @@
---credit to openai's chatgpt
-deletePartsWithScriptOrTouchInterest = function(parent)
-    local parts = parent:GetDescendants()
-    for _, part in pairs(parts) do
-        if part:IsA("BasePart") then
-            local hasScriptOrTouchInterest = false
-
-            for _, descendant in pairs(part:GetDescendants()) do
-                if descendant:IsA("Script") or descendant:IsA("TouchTransmitter") then
-                    hasScriptOrTouchInterest = true
-                    break
-                end
-            end
-
-            if hasScriptOrTouchInterest then
-                part:Destroy()
-            end
-        end
-    end
+while game:IsLoaded() do
+glassparent = game.Workspace["Glass Bridge"].GlassPane
+for i,v in ipairs(glassparent:GetChildren()) do
+	if v:IsA("Folder") then
+		for t,x in ipairs(v:GetChildren()) do
+			x.CanCollide = true
+			for b,c in ipairs(x:GetChildren()) do
+					print("Found touch interest!")
+					c:Destroy()
+			end
+		end
+	end
 end
-
-deletePartsWithScriptOrTouchInterest(game.Workspace["Glass Bridge"])
+wait(.01)
+end
