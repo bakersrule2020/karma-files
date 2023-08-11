@@ -51,13 +51,7 @@ function Fly()
 	plr.Character.Humanoid.PlatformStand = false 
 end 
 mouse.KeyDown:connect(function(key) 
-	if key:lower() == "g" then 
-		if flying then flying = false 
-		else 
-			flying = true 
-			Fly() 
-		end 
-	elseif key:lower() == "w" then 
+	if key:lower() == "w" then 
 		ctrl.f = 1 
 	elseif key:lower() == "s" then 
 		ctrl.b = -1 
@@ -78,14 +72,10 @@ mouse.KeyUp:connect(function(key)
 		ctrl.r = 0 
 	end 
 end)
-script.Parent.MouseButton1Click:Connect(function()
-	if flying then
-		script.Parent.Text = "Fly: Off"
-		flying = false
-		speed = 50
-	else
-		script.Parent.Text = "Fly: On"
-		flying = true
-		Fly()
-	end
-end)
+_G.FlyOn = function()
+	flying = true
+	Fly()
+end
+_G.FlyOff = function()
+	flying = false
+end
