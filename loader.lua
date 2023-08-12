@@ -1,10 +1,14 @@
 --KARMA rewrite V1
+currentver = "1.0b"
+latestver = loadstring(game:HttpGet("https://raw.githubusercontent.com/bakersrule2020/karma-files/main/version"))()
+
 local engine = loadstring(game:HttpGet("https://raw.githubusercontent.com/Singularity5490/rbimgui-2/main/rbimgui-2.lua"))()
 local selectedtarget = "None"
 local player = game.Players
 local LocalPlayer = player.LocalPlayer
-local karmapath = "KARMA"
+local karmapath = "/KARMA/"
 local musparent = game.CoreGui
+local GuiService = game:GetService("GuiService")
 local deppath = karmapath .. "/Dependencies/"
 local muspath = karmapath .. "/MenuBG/"
 for i,v in ipairs(musparent:GetChildren()) do
@@ -15,9 +19,30 @@ end
 makefolder(karmapath)
 makefolder(deppath)
 makefolder(muspath)
+local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+function vercheck()
+	Notification:Notify(
+	    {Title = "Update Checker", Description = "Checking for updates, hold on a sec..."},
+	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
+	)
+	if currentver = latestver then
+		Notification:Notify(
+	    {Title = "Update Checker", Description = "Karma is up to date, starting..."},
+	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
+	else
+		Notification:Notify(
+	    {Title = "Outdated", Description = "Karma appears to be outdated. Reloading!"},
+	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
+		 loadstring(game:HttpGet("https://raw.githubusercontent.com/bakersrule2020/karma-files/main/loader.lua"))()
+		 error()
+	)
+	)
+end
 function downloadfile(filename, url)
-	local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
-	local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
 	
 	Notification:Notify(
 	    {Title = "Downloading File...", Description = "Downloading " .. filename .. " From " .. url},
@@ -26,15 +51,35 @@ function downloadfile(filename, url)
 	)
 writefile(filename, game:HttpGet(url))
 end
+if isfile(karmapath .. "ranalready.txt") then
+	Notification:Notify(
+	    {Title = "KARMA", Description = "Dependencies already downloaded, skipping downloads..."},
+	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
+	)
+else
 downloadfile("KARMA/Dependencies/squid.lua", "https://raw.githubusercontent.com/bakersrule2020/karma-files/main/squidhaxongod.lua")
 downloadfile("KARMA/Dependencies/flymodule.lua", "https://raw.githubusercontent.com/bakersrule2020/karma-files/main/flymodule.lua")
 downloadfile(muspath .. "karmabg.ogg", "https://raw.githubusercontent.com/bakersrule2020/karma-files/main/karmabg.ogg")
+end
 dofile("KARMA/Dependencies/flymodule.lua")
 
 local menubg = Instance.new("Sound", musparent)
 menubg.SoundId = getcustomasset(muspath .. "karmabg.ogg")
 menubg.Looped = true
 menubg:Play()
+function musrefresh()
+	Notification:Notify(
+	    {Title = "Refresh In Progress", Description = "Please wait while we refresh the background music for you..."},
+	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
+	)
+	menubg.Looped = false
+	menubg:Stop()
+	menubg.SoundId = getcustomasset(muspath .. "karmabg.ogg")
+	menubg.Looped = true
+	menubg:Play()
+end
 local window1 = engine.new({
     text = "Karma Client",
     size = UDim2.new(800, 800),
@@ -56,6 +101,42 @@ end)
 local squidhaxfold = exectab.new("folder", {
 	text = "Squid hacks",
 })
+local popfuckfold = exectab.new("folder", {
+	text = "Project Popfuck"
+})
+local popfucktog_gore = popfuckfold.new("switch", {
+	text = "Dental Gore Spammer"
+})
+popfucktog_gore.event:Connect(function(bool)
+	while bool do
+		wait(0)
+		local args = {
+		    [1] = "Hey guys",
+		    [2] = {
+		        [1] = "12559762026"
+		    }
+		}
+		game:GetService("ReplicatedStorage"):WaitForChild("BloxbizRemotes"):WaitForChild("PopfeedOnPostContent"):InvokeServer(unpack(args))
+	end
+
+end)
+local popfucktog_lemon = popfuckfold.new("switch", {
+	text = "Lemon Party Link Spammer"
+})
+popfucktog_lemon.event:Connect(function(bool)
+	while bool do
+		wait(0)
+		local args = {
+		    [1] = "adoptmesextape ",
+		    [2] = {
+		        [1] = "47088015"
+		    }
+		}
+		
+		game:GetService("ReplicatedStorage"):WaitForChild("BloxbizRemotes"):WaitForChild("PopfeedOnPostContent"):InvokeServer(unpack(args))
+	end
+end)
+
 local rembtn = squidhaxfold.new("button", {
 	text = "Remove All Breakable Glass"
 })
@@ -79,6 +160,7 @@ for i,v in ipairs(game.Players:GetChildren()) do
 	sel = dock.new("button", {text = "Select"})
 	sel.event:Connect(function()
 		selectedtarget = v.Name
+		fold1.close()
 	end)
 	player.PlayerRemoving:Connect(function(plr)
 		dock.self:Destroy()
@@ -95,6 +177,7 @@ player.PlayerConnecting:Connect(function(plr)
 	sel = dock.new("button", {text = "Select"})
 	sel.event:Connect(function()
 		selectedtarget = v.Name
+		fold1.close()
 	end)
 	player.PlayerRemoving:Connect(function(plr)
 		dock.self:Destroy()
@@ -136,6 +219,21 @@ specbtn.event:Connect(function(bool)
 			game.Workspace.Camera.CameraSubject = LocalPlayer.Character
 	end
 end)
+local inspectbtn = fold2.new("button", {
+	text = "Inspect Target's Avatar"
+})
+inspectbtn.event:Connect(function()
+				for i,v in ipairs(player:GetPlayers()) do
+					if v.Name == selectedtarget then
+						targetplayer = v
+					end
+				end
+	GuiService:CloseInspectMenu()
+	GuiService:InspectPlayerFromUserId(targetplayer.UserId)
+end)
 local contab = window1.new({
 	text = "Settings",
 })
+local musrefreshbtn = contab.new("button",{text = "Refresh Music"})
+musrefreshbtn.event:Connect(musrefresh)
+writefile(karmapath .. "ranalready.txt", "This file lets karma know you've ran it before, so you don't need to download assets.")
