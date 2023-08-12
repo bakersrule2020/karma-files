@@ -2,9 +2,15 @@
 currentver = "1.0b"
 latestver = loadstring(game:HttpGet("https://raw.githubusercontent.com/bakersrule2020/karma-files/main/version"))()
 
+Notification:Notify(
+	    {Title = "Welcome", Description = "Welcome to karma client version " .. currentver .. "!"},
+	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end})
+
 local engine = loadstring(game:HttpGet("https://raw.githubusercontent.com/Singularity5490/rbimgui-2/main/rbimgui-2.lua"))()
 local selectedtarget = "None"
 local player = game.Players
+local httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 local LocalPlayer = player.LocalPlayer
 local karmapath = "/KARMA/"
 local musparent = game.CoreGui
@@ -19,36 +25,41 @@ end
 makefolder(karmapath)
 makefolder(deppath)
 makefolder(muspath)
+function getrequest(url)
+	response = httprequest({
+		Url = url,
+		Method = 'GET'
+
+	})
+	return response.Body
+end
 local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
 function vercheck()
 	Notification:Notify(
 	    {Title = "Update Checker", Description = "Checking for updates, hold on a sec..."},
 	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
-	)
-	if currentver = latestver then
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end})
+	if currentver == latestver then
 		Notification:Notify(
 	    {Title = "Update Checker", Description = "Karma is up to date, starting..."},
 	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end})
 	else
 		Notification:Notify(
 	    {Title = "Outdated", Description = "Karma appears to be outdated. Reloading!"},
 	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
-		 loadstring(game:HttpGet("https://raw.githubusercontent.com/bakersrule2020/karma-files/main/loader.lua"))()
-		 error()
-	)
-	)
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end})
+		 loadstring(getrequest("https://raw.githubusercontent.com/bakersrule2020/karma-files/main/loader.lua"))
+	end
 end
+vercheck()
 function downloadfile(filename, url)
 	
 	Notification:Notify(
 	    {Title = "Downloading File...", Description = "Downloading " .. filename .. " From " .. url},
 	    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end}
-	)
+		 {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) end})
 writefile(filename, game:HttpGet(url))
 end
 if isfile(karmapath .. "ranalready.txt") then
