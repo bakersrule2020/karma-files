@@ -1,6 +1,8 @@
 --KARMA rewrite V1
 currentver = "1.0b"
 latestver = loadstring(game:HttpGet("https://raw.githubusercontent.com/bakersrule2020/karma-files/main/version"))()
+local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
 
 Notification:Notify(
 	    {Title = "Welcome", Description = "Welcome to karma client version " .. currentver .. "!"},
@@ -33,8 +35,6 @@ function getrequest(url)
 	})
 	return response.Body
 end
-local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
-local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
 function vercheck()
 	Notification:Notify(
 	    {Title = "Update Checker", Description = "Checking for updates, hold on a sec..."},
