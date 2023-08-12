@@ -4,6 +4,17 @@ local selectedtarget = "None"
 local player = game.Players
 local LocalPlayer = player.LocalPlayer
 local karmapath = "KARMA"
+local musparent = game.CoreGui
+local deppath = karmapath .. "/Dependencies/"
+local muspath = karmapath .. "/MenuBG/"
+for i,v in ipairs(musparent:GetChildren()) do
+	if v:IsA("Sound") then
+		v:Destroy()
+	end
+end
+makefolder(karmapath)
+makefolder(deppath)
+makefolder(muspath)
 function downloadfile(filename, url)
 	local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
 	local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
@@ -17,7 +28,13 @@ writefile(filename, game:HttpGet(url))
 end
 downloadfile("KARMA/Dependencies/squid.lua", "https://raw.githubusercontent.com/bakersrule2020/karma-files/main/squidhaxongod.lua")
 downloadfile("KARMA/Dependencies/flymodule.lua", "https://raw.githubusercontent.com/bakersrule2020/karma-files/main/flymodule.lua")
+downloadfile(muspath .. "karmabg.ogg", "https://raw.githubusercontent.com/bakersrule2020/karma-files/main/karmabg.ogg")
 dofile("KARMA/Dependencies/flymodule.lua")
+
+local menubg = Instance.new("Sound", musparent)
+menubg.SoundId = getcustomasset(muspath .. "karmabg.ogg")
+menubg.Looped = true
+menubg:Play()
 local window1 = engine.new({
     text = "Karma Client",
     size = UDim2.new(800, 800),
@@ -35,6 +52,15 @@ fly.event:Connect(function(bool)
 	else
 		_G.FlyOff()
 	end
+end)
+local squidhaxfold = exectab.new("folder", {
+	text = "Squid hacks",
+})
+local rembtn = squidhaxfold.new("button", {
+	text = "Remove All Breakable Glass"
+})
+rembtn.event:Connect(function()
+	dofile(deppath .. "squid.lua")
 end)
 local tab1 = window1.new({
     text = "Target",
@@ -55,7 +81,7 @@ for i,v in ipairs(game.Players:GetChildren()) do
 		selectedtarget = v.Name
 	end)
 	player.PlayerRemoving:Connect(function(plr)
-		dock.Destroy()
+		dock.self:Destroy()
 		if selectedtarget == plr.Name then
 			selectedtarget = "None"
 		end
@@ -71,7 +97,7 @@ player.PlayerConnecting:Connect(function(plr)
 		selectedtarget = v.Name
 	end)
 	player.PlayerRemoving:Connect(function(plr)
-		dock.Destroy()
+		dock.self:Destroy()
 		if selectedtarget == plr.Name then
 			selectedtarget = "None"
 		end
@@ -110,3 +136,6 @@ specbtn.event:Connect(function(bool)
 			game.Workspace.Camera.CameraSubject = LocalPlayer.Character
 	end
 end)
+local contab = window1.new({
+	text = "Settings",
+})
